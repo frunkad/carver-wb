@@ -20,7 +20,7 @@ for (let i = 0; i < 200; i++) cases.push([+(Math.random()*200+1).toFixed(1), +(M
 ctx.__keys.forEach((k, i) => { if (!WB.find(k)) { console.log('skip (removed):', k); return; }
   for (const [f, p, c] of cases) {
     const o = ctx.__run(i, f, p, c);
-    const r = WB.compute(k, f, p, c);
+    const ac = WB.find(k); const r = WB.compute(k === 'tlb' ? Object.assign({}, ac, { taxi: 0 }) : ac, f, p, c); // original had no TLB taxi
     const on = nums(o.html);
     // Original: weight/arm/moment numbers. Check take-off weight, moment, CG and lbs appear identically.
     const want = [r.takeoff.w.toFixed(2), r.takeoff.m.toFixed(2), r.takeoff.cg.toFixed(2), r.takeoff.cg.toFixed(3), r.fuelKg.toFixed(2)];
@@ -32,9 +32,10 @@ ctx.__keys.forEach((k, i) => { if (!WB.find(k)) { console.log('skip (removed):',
 });
 console.log(`${n} cases, ${fail} mismatches`);
 // Show where original limit text disagrees with correct check
-let ld = 0; ctx.__keys.forEach((k,i)=>{ if (!WB.find(k)) return; for (const [f,p,c] of cases){ const o=ctx.__run(i,f,p,c); const r=WB.compute(k,f,p,c);
+let ld = 0; ctx.__keys.forEach((k,i)=>{ if (!WB.find(k)) return; for (const [f,p,c] of cases){ const o=ctx.__run(i,f,p,c); const a=WB.find(k); const r=WB.compute(k==='tlb'?Object.assign({},a,{taxi:0}):a,f,p,c);
   if ((o.limits.toUpperCase()==='YES') !== r.withinLimits) { ld++; if (ld<6) console.log('limit diff', k,f,p,c,'orig',o.limits,'cg',r.takeoff.cg.toFixed(2)); } }});
 console.log('limit-verdict differences:', ld);
 // VT-RUM sample
 const s = WB.compute('RUM', 120, 75, 70); console.log('RUM 120L/75/70:', s.takeoff.w.toFixed(2), 'kg CG', s.takeoff.cg.toFixed(2), s.withinLimits);
+const t = WB.compute('TLB', 300, 80, 0); console.log('TLB 300L/80/0 (taxi 5):', t.ramp.w.toFixed(2), '->', t.takeoff.w.toFixed(2), 'kg CG', t.takeoff.cg.toFixed(2));
 process.exit(fail ? 1 : 0);

@@ -50,7 +50,7 @@
     { reg: 'AAG', bem: 760.90, arm: 43.87, taxi: 3.8, type: 'c172' },
     { reg: 'AAL', bem: 766.50, arm: 43.06, taxi: 3.8, type: 'c172' },
     { reg: 'RUM', bem: 758.16, arm: 43.03, taxi: 3.8, type: 'c172' },
-    { reg: 'TLB', bem: 1419.20, arm: 14.95, taxi: 0, type: 'tlb' }
+    { reg: 'TLB', bem: 1419.20, arm: 14.95, taxi: 5, type: 'tlb' } // taxi 5 kg per Carver (original app used 0)
   ];
 
   function find(reg) {
@@ -62,7 +62,7 @@
   /**
    * compute(reg, fuelLitres, picKg, copilotKg) -> load sheet object.
    * Mirrors the original app: ramp = BEM + fuel + PIC + co-pilot;
-   * take-off = ramp − taxi fuel (taxi at fuel arm). TLB has taxi 0.
+   * take-off = ramp − taxi fuel (taxi at fuel arm).
    */
   function compute(reg, fuelL, pic, co) {
     var ac = typeof reg === 'object' ? reg : find(reg);
