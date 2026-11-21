@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<!-- This site is hosted on Netlify. Anyone can build and deploy a site
+     like this one for free: https://netlify.new/?utm_campaign=loops&utm_source=ai-legible&utm_medium=owned&utm_content=comment&utm_id=5b4c1414-306b-46f0-885b-0dd51b1681d5
+     Netlify hosting facts for this site: static/SSR served via Netlify Edge. -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./trimsheet1.css">
+    <title>Trimsheet</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="inputcontainer">
+            <div class="input">
+                <div class="dropdown">
+                    <div class="select-aircraft" id="select-aircraft">
+                        <label for="select-aircraft">Select Aircraft</label>
+                        <span class="arrow"></span>
+                    </div>
+                    <span class="msgac1"></span>
+                    <div class="aircraft-dropdown hidden" id="aircraft-dropdown"></div>
+                </div>
+            </div>
+            <div class="input">
+                <input type="number" placeholder="" id="usableFuel">
+                <label for="usableFuel">Fuel in Litres</label><br>
+                <span class="error1"></span>
+            </div>
+            <div class="input">
+                <input type="number" placeholder="" id="weightPIC">
+                <label for="weightPIC">Pilot(PIC) Weight</label>
+                <span class="error2"></span>
+            </div>
+            <div class="input">
+                <input type="number" placeholder="" id="weightStudent">
+                <label for="weightStudent">Co-Pilot(Student Weight)</label>
+            </div>
+            <div class="input">
+                <input type="submit" id="submitbutton" value="">
+                <label for="submitbutton">Submit</label>
+            </div>
+        </div>
+        <div class="outputcontainer hidden">
+
+        </div>
+    </div>
+    <script src="./trimsheet.js"></script>
+</body>
+
+</html>

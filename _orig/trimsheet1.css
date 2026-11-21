@@ -1,0 +1,349 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --bodybg: #008caf;
+    --headerbg: #d1f4fa;
+    --triminputbg: #e9ffff;
+    --selectcolor: #007180;
+    --selecthover: #1B998B;
+    --wrngcolor: red;
+}
+
+html {
+    font-size: 16px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    width: 100%;
+    height: 100svh;
+    font-size: 1rem;
+    background: var(--bodybg);
+}
+
+.container {
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-origin: content-box;
+    background-size: cover;
+    background: url('./bgphoto.avif');
+    display: grid;
+    place-items: center;
+}
+
+.inputcontainer,
+.outputcontainer {
+    max-width: 680px;
+    background: var(--triminputbg);
+    padding: 2rem;
+    display: grid;
+    place-items: center;
+    gap: 2rem;
+    border-radius: 0.3rem;
+    box-shadow: 4px 4px 4px rgba(0, 113, 128, 0.9);
+}
+
+.input {
+    width: 100%;
+    position: relative;
+}
+
+/*dropdown*/
+.dropdown {
+    background: var(--selectcolor);
+    border-radius: 0.3rem;
+    color: var(--triminputbg);
+    position: relative;
+}
+
+.select-aircraft {
+    padding: 0.7rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+}
+
+.select-aircraft label {
+    cursor: pointer;
+    font-size: 0.8rem;
+}
+
+.arrow {
+    width: 10px;
+    height: 10px;
+    position: relative;
+    transition: all 0.5s ease;
+    margin-right: 0.2rem;
+}
+
+.arrow::after,
+.arrow::before {
+    content: "";
+    position: absolute;
+    background: var(--triminputbg);
+    width: 100%;
+    height: 0.2rem;
+    border-radius: 15px;
+    top: 10%;
+    transition: all 0.5s ease;
+}
+
+.arrow::after {
+    transform: rotate(-45deg);
+    transform-origin: right;
+    right: -15%;
+}
+
+.arrow::before {
+    transform: rotate(45deg);
+    transform-origin: left;
+    left: -15%;
+}
+
+.arrowup::after,
+.arrowup::before {
+    top: 70%;
+    transition: all 0.5s ease;
+}
+
+.arrowup::after {
+    transform: rotate(45deg);
+    transform-origin: right;
+    right: -15%;
+}
+
+.arrowup::before {
+    transform: rotate(-45deg);
+    transform-origin: left;
+    left: -15%;
+}
+
+.aircraft-dropdown {
+    background: var(--selectcolor);
+    width: 100%;
+    display: grid;
+    gap: 0.2rem;
+    position: absolute;
+    border-radius: 0.3rem;
+    z-index: 2;
+}
+
+.aircraft-dropdown label {
+    width: 100%;
+    padding: 0.5rem 0rem 0.5rem 1rem;
+}
+
+.aircraft-dropdown label:hover {
+    background: var(--bodybg);
+    cursor: pointer;
+}
+
+.aircraft-dropdown input[type='radio'] {
+    display: none;
+}
+
+.msgac1,
+.error1,
+.error2 {
+    position: absolute;
+    left: 5%;
+    bottom: -50%;
+    color: var(--wrngcolor);
+    font-size: 0.8rem;
+}
+
+/*Dropdown*/
+
+/*input */
+
+.input input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border-radius: 0.3rem;
+    background: none;
+    border: 1px solid;
+    border-color: var(--bodybg);
+    outline: none;
+    transition: 0.3s ease;
+}
+
+.input:nth-child(2) input:focus~label,
+.input:nth-child(3) input:focus~label,
+.input:nth-child(4) input:focus~label,
+.input:nth-child(2) input:not(:focus):not(:placeholder-shown)~label,
+.input:nth-child(3) input:not(:focus):not(:placeholder-shown)~label,
+.input:nth-child(4) input:not(:focus):not(:placeholder-shown)~label {
+    font-size: 0.6rem;
+    padding: 0 0.5rem;
+    left: 5%;
+    top: -2%;
+    border-left: 1px solid #007180;
+    border-right: 1px solid #007180;
+    background: var(--triminputbg);
+}
+
+.input:nth-child(2) label,
+.input:nth-child(3) label,
+.input:nth-child(4) label {
+    position: absolute;
+    color: var(--selectcolor);
+    padding-left: 1rem;
+    left: 0%;
+    top: 50%;
+    font-size: 0.8rem;
+    transform: translate(0%, -50%);
+    transition: 0.3s ease;
+}
+
+.input:nth-child(5) input {
+    background: var(--selectcolor);
+    border: none;
+    outline: none;
+    border-radius: 0.3rem;
+}
+
+.input:nth-child(5) label {
+    position: absolute;
+    font-size: 0.8rem;
+    color: var(--triminputbg);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.input:nth-child(5) input:hover,
+.input:nth-child(5) label:hover {
+    cursor: pointer;
+    background: var(--bodybg);
+}
+
+.input:nth-child(5) input:focus {
+    scale: 0.9;
+}
+
+
+/*input*/
+.outputcontainer {
+    gap: 1rem;
+}
+
+.outl {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 0.5rem;
+}
+
+
+
+
+
+
+.cg {
+    display: grid;
+    gap: 0.5rem;
+    width: 100%;
+}
+
+.cglim {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.cglim span {
+    flex: 1;
+}
+
+.cglim:nth-child(1) {
+    display: grid;
+    place-items: center;
+    grid-template-columns: auto auto;
+}
+
+.cglim:nth-child(1) span:nth-last-child(1) {
+    border: 1px solid;
+    border-color: var(--selectcolor);
+    padding: 0.2rem 0.5rem;
+    text-align: center;
+}
+
+.cglim:nth-child(2) {
+    border-bottom: 1px solid black;
+}
+
+
+hr {
+    margin: auto;
+    width: 30%;
+    border: 0.05rem solid #424242;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+thead {
+    background: var(--selectcolor);
+    color: var(--triminputbg);
+    font-size: 0.8rem;
+}
+
+thead tr td {
+    border-color: var(--triminputbg);
+}
+
+tr td {
+    border: 0.5px solid;
+    border-color: var(--selectcolor);
+    padding: 5px;
+}
+
+tr td:nth-child(1),
+tr td:nth-child(4) {
+    text-align: center;
+}
+
+tr td:nth-child(3),
+tr td:nth-child(5) {
+    text-align: right;
+    padding: 0px 10px;
+}
+
+tr td:nth-child(1) {
+    width: 30px;
+}
+
+tr td:nth-child(2) {
+    width: 160px;
+}
+
+tr td:nth-child(2) span {
+    font-size: 0.7rem;
+}
+
+::-webkit-inner-spin-button,
+::-webkit-outer-spin-button {
+    display: none;
+}
+
+.hidden {
+    display: none;
+}
+
+
+@media (max-width:480px) {
+
+    .inputcontainer,
+    .outputcontainer {
+        font-size: 0.8rem;
+    }
+
+    .outputcontainer {
+        padding: 2rem 1rem;
+    }
+}

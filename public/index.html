@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#007180">
+  <meta name="description" content="Carver Aviation weight & balance / trim sheet calculator">
+  <title>Trimsheet · Carver Aviation W&amp;B</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✈️</text></svg>">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top">
+    <h1>Trimsheet</h1>
+    <span class="sub">Carver Aviation · Weight &amp; Balance</span>
+  </header>
+
+  <main>
+    <form id="form" class="card" autocomplete="off" novalidate>
+      <fieldset>
+        <legend>Aircraft</legend>
+        <div id="fleet" class="fleet" role="radiogroup" aria-label="Aircraft"></div>
+      </fieldset>
+
+      <div class="fields">
+        <label class="field">
+          <span>Fuel <small>(litres)</small></span>
+          <input id="fuel" type="number" inputmode="decimal" min="0" step="any" placeholder="e.g. 120" enterkeyhint="next">
+          <em class="err" id="fuelErr"></em>
+        </label>
+        <label class="field">
+          <span>Pilot (PIC) <small>(kg)</small></span>
+          <input id="pic" type="number" inputmode="decimal" min="0" step="any" placeholder="e.g. 75" enterkeyhint="next">
+          <em class="err" id="picErr"></em>
+        </label>
+        <label class="field">
+          <span>Co-pilot / student <small>(kg, optional)</small></span>
+          <input id="co" type="number" inputmode="decimal" min="0" step="any" placeholder="0" enterkeyhint="done">
+        </label>
+      </div>
+      <p class="hint" id="hint">Select an aircraft and enter fuel &amp; pilot weight — results update live.</p>
+    </form>
+
+    <section id="result" class="card result" hidden aria-live="polite">
+      <div class="summary">
+        <div class="status" id="status"></div>
+        <dl class="kpis">
+          <div><dt>Take-off weight</dt><dd id="kTow"></dd></div>
+          <div><dt>Take-off CG</dt><dd id="kCg"></dd></div>
+          <div><dt>Fuel</dt><dd id="kFuel"></dd></div>
+        </dl>
+        <div class="gauge" aria-hidden="true">
+          <div class="gbar"><div class="gmark" id="gMark"></div></div>
+          <div class="glabels"><span id="gMin"></span><span id="gMax"></span></div>
+        </div>
+        <p class="limit" id="limitText"></p>
+      </div>
+
+      <details class="sheet" open>
+        <summary>Load sheet</summary>
+        <div class="tablewrap">
+          <table>
+            <thead><tr><th>#</th><th>Item</th><th>Weight<br><small>kg</small></th><th>Arm<br><small>in</small></th><th>Moment<br><small>kg·in</small></th></tr></thead>
+            <tbody id="rows"></tbody>
+          </table>
+        </div>
+        <p class="calc" id="calcText"></p>
+      </details>
+
+      <div class="actions">
+        <button type="button" id="printBtn" class="btn ghost">Print / Save PDF</button>
+        <button type="button" id="resetBtn" class="btn ghost">New sheet</button>
+      </div>
+    </section>
+  </main>
+
+  <footer>For training reference only. Always verify against the aircraft POH / W&amp;B schedule.</footer>
+
+  <script src="calc.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
