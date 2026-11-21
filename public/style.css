@@ -182,3 +182,4 @@ main > *, .kpis > div, .wlimits > div, .status span { min-width: 0; }
   padding: 8px 14px; min-height: 36px; cursor: pointer;
 }
 @media print { .toast { display: none !important; } }
+.noscript { margin: 12px; padding: 12px 14px; border-radius: 10px; background: var(--bad-bg); color: var(--bad); font-weight: 600; }

@@ -1,7 +1,7 @@
 /* Carver W&B service worker — offline-first app shell with explicit update flow.
  * CACHE_VERSION is stamped by scripts/stamp.js (content hash of all assets) before every deploy.
  */
-const CACHE_VERSION = 'wb-f99cc61017';
+const CACHE_VERSION = 'wb-b3348bfcdf';
 const PRECACHE = [
   './',            // index.html (Pages 308-redirects /index.html -> /, so cache the canonical URL)
   'app.js',
