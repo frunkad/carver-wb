@@ -52,23 +52,33 @@
     var t = r.type, ac = r.aircraft;
 
     var st = $('status');
-    st.className = 'status ' + (r.withinLimits ? 'ok' : 'bad');
     var msgs = [];
     if (!r.cgOk) msgs.push('✕ CG OUT OF LIMITS');
+    if (r.overRamp > 0) msgs.push('✕ OVER MAX RAMP by ' + f2(r.overRamp) + ' kg');
     if (r.weightOk === false) msgs.push('✕ OVER MTOW by ' + f2(r.overMtow) + ' kg');
+    if (r.overMzfw > 0) msgs.push('✕ OVER MZFW by ' + f2(r.overMzfw) + ' kg');
     if (!msgs.length) msgs.push('✓ CG within limits');
+    st.className = 'status ' + (r.withinLimits ? 'ok' : 'bad');
     st.innerHTML = '<b>VT-' + ac.reg + '</b><span>' + msgs.join('<br>') + '</span>';
     var wl = $('weightLimits');
+    function card(label, limit, over, okText) {
+      var bad = over > 0;
+      return '<div class="' + (bad ? 'bad' : 'ok') + '"><span>' + label + '</span><b>' + f2(limit) + ' kg</b><em>' +
+        (bad ? 'over by ' + f2(over) + ' kg' : okText) + '</em></div>';
+    }
     if (r.mtow) {
-      wl.className = 'wlimits ' + (r.weightOk ? 'ok' : 'bad');
-      wl.innerHTML =
-        '<div><span>MTOW</span><b>' + f2(r.mtow) + ' kg</b><em>' + (r.weightOk ? f2(-r.overMtow) + ' kg margin' : 'over by ' + f2(r.overMtow) + ' kg') + '</em></div>' +
-        '<div><span>MLW</span><b>' + f2(r.mlw) + ' kg</b><em>' + (r.minBurnForMlw > 0 ? 'burn ≥ ' + f2(r.minBurnForMlw) + ' kg before landing' : 'TOW ≤ MLW') + '</em></div>';
+      wl.className = 'wlimits';
+      var h = '';
+      if (r.maxRamp) h += card('Max ramp', r.maxRamp, r.overRamp, f2(-r.overRamp) + ' kg margin');
+      h += card('MTOW', r.mtow, r.overMtow, f2(-r.overMtow) + ' kg margin');
+      h += '<div class="' + (r.minBurnForMlw > 0 ? 'warn' : 'ok') + '"><span>MLW</span><b>' + f2(r.mlw) + ' kg</b><em>' +
+        (r.minBurnForMlw > 0 ? 'burn ≥ ' + f2(r.minBurnForMlw) + ' kg before landing' : 'TOW ≤ MLW') + '</em></div>';
+      if (r.mzfw) h += card('MZFW', r.mzfw, r.overMzfw, 'ZFW ' + f2(r.zfw) + ' kg');
+      wl.innerHTML = h;
     } else {
       wl.className = 'wlimits na';
       wl.innerHTML = '<div><span>MTOW / MLW</span><b>not set</b><em>weight not checked for this aircraft</em></div>';
     }
-
     $('kTow').innerHTML = f2(r.takeoff.w) + ' kg<small>' + f2(r.takeoff.lb) + ' lb' + (r.mtow ? ' · max ' + f2(r.mtow) : '') + '</small>';
     $('kTow').parentNode.className = r.weightOk === false ? 'bad' : '';
     $('kCg').parentNode.className = r.cgOk ? '' : 'bad';

@@ -158,9 +158,11 @@ footer a:hover { color: var(--brand); }
 .wlimits span { font-size: .7rem; text-transform: uppercase; letter-spacing: .4px; color: var(--muted); }
 .wlimits b { font-variant-numeric: tabular-nums; }
 .wlimits em { font-style: normal; font-size: .75rem; color: var(--muted); }
-.wlimits.ok > div:first-child { border-color: #bfe8d1; }
-.wlimits.bad > div:first-child { border-color: var(--bad); background: var(--bad-bg); }
-.wlimits.bad > div:first-child em { color: var(--bad); font-weight: 600; }
+.wlimits > div.ok { border-color: #bfe8d1; }
+.wlimits > div.bad { border-color: var(--bad); background: var(--bad-bg); }
+.wlimits > div.bad em { color: var(--bad); font-weight: 600; }
+.wlimits > div.warn { border-color: #f0c36d; }
+.wlimits > div.warn em { color: #b26a00; }
 @media print { .wlimits { display: grid !important; } }
 .status b { white-space: nowrap; }
 main > *, .kpis > div, .wlimits > div, .status span { min-width: 0; }

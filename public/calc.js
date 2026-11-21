@@ -41,7 +41,8 @@
   };
 
   // Fleet. bem = basic empty weight (kg), arm = BEM CG arm (in), taxi = start/taxi fuel (kg),
-  // mtow / mlw = max take-off / landing weight (kg); null = not known yet (no weight check).
+  // mtow / mlw = max take-off / landing weight (kg); maxRamp / mzfw = max ramp / zero-fuel weight (kg).
+  // Missing values = not checked.
   var AIRCRAFT = [
     { reg: 'TNT', bem: 760.81, arm: 40.02, taxi: 3.8, mtow: 1157.70, mlw: 1157.70, type: 'c172' },
     { reg: 'FTV', bem: 765.00, arm: 39.49, taxi: 3.8, mtow: 1157.70, mlw: 1157.70, type: 'c172' },
@@ -51,7 +52,8 @@
     { reg: 'AAG', bem: 760.90, arm: 43.87, taxi: 3.8, mtow: 1157.70, mlw: 1157.70, type: 'c172' },
     { reg: 'AAL', bem: 766.50, arm: 43.06, taxi: 3.8, mtow: 1157.70, mlw: 1157.70, type: 'c172' },
     { reg: 'RUM', bem: 758.16, arm: 43.03, taxi: 3.8, mtow: 1111.30, mlw: 1111.30, type: 'c172' },
-    { reg: 'TLB', bem: 1419.20, arm: 14.95, taxi: 5, type: 'tlb' } // taxi 5 kg per Carver (original app used 0)
+    { reg: 'TLB', bem: 1419.20, arm: 14.95, taxi: 5, mtow: 2084, mlw: 1980, maxRamp: 2100, mzfw: 1890, type: 'tlb' }
+    // TLB = Partenavia P68C. Limits from Carver load & trim sheet; taxi 5 kg per Carver (original app used 0).
   ];
 
   function find(reg) {
@@ -106,7 +108,13 @@
       // Landing weight ≤ take-off weight; if TOW > MLW, at least this much fuel must be burnt before landing.
       minBurnForMlw: ac.mlw ? Math.max(0, towW - ac.mlw) : null,
       weightOk: ac.mtow ? towW <= ac.mtow : null,
-      withinLimits: (cg >= t.cgMin && cg <= t.cgMax) && (ac.mtow ? towW <= ac.mtow : true)
+      maxRamp: ac.maxRamp || null,
+      overRamp: ac.maxRamp ? rampW - ac.maxRamp : null,
+      zfw: ac.bem + pic + co,
+      mzfw: ac.mzfw || null,
+      overMzfw: ac.mzfw ? ac.bem + pic + co - ac.mzfw : null,
+      withinLimits: (cg >= t.cgMin && cg <= t.cgMax) && (ac.mtow ? towW <= ac.mtow : true) &&
+        (ac.maxRamp ? rampW <= ac.maxRamp : true) && (ac.mzfw ? ac.bem + pic + co <= ac.mzfw : true)
     };
   }
 
