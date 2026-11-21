@@ -94,7 +94,11 @@
       if (e.key === 'Enter') {
         e.preventDefault();
         var next = el === fuel ? pic : el === pic ? co : null;
-        if (next) next.focus(); else el.blur();
+        if (next) next.focus();
+        else {
+          el.blur();
+          if (!$('result').hidden) $('result').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
       }
     });
   });
