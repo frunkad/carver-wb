@@ -17,7 +17,7 @@ const nums = h => (h.replace(/<[^>]+>/g, ' ').match(/-?\d+\.\d+/g) || []);
 const cases = [];
 for (const f of [20, 60, 100, 120, 150, 168, 200]) for (const p of [55, 75, 95]) for (const c of [0, 60, 90]) cases.push([f, p, c]);
 for (let i = 0; i < 200; i++) cases.push([+(Math.random()*200+1).toFixed(1), +(Math.random()*70+45).toFixed(1), Math.random()<.3?0:+(Math.random()*70+45).toFixed(1)]);
-ctx.__keys.forEach((k, i) => {
+ctx.__keys.forEach((k, i) => { if (!WB.find(k)) { console.log('skip (removed):', k); return; }
   for (const [f, p, c] of cases) {
     const o = ctx.__run(i, f, p, c);
     const r = WB.compute(k, f, p, c);
@@ -32,7 +32,7 @@ ctx.__keys.forEach((k, i) => {
 });
 console.log(`${n} cases, ${fail} mismatches`);
 // Show where original limit text disagrees with correct check
-let ld = 0; ctx.__keys.forEach((k,i)=>{ for (const [f,p,c] of cases){ const o=ctx.__run(i,f,p,c); const r=WB.compute(k,f,p,c);
+let ld = 0; ctx.__keys.forEach((k,i)=>{ if (!WB.find(k)) return; for (const [f,p,c] of cases){ const o=ctx.__run(i,f,p,c); const r=WB.compute(k,f,p,c);
   if ((o.limits.toUpperCase()==='YES') !== r.withinLimits) { ld++; if (ld<6) console.log('limit diff', k,f,p,c,'orig',o.limits,'cg',r.takeoff.cg.toFixed(2)); } }});
 console.log('limit-verdict differences:', ld);
 // VT-RUM sample

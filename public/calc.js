@@ -42,7 +42,6 @@
 
   // Fleet. bem = basic empty weight (kg), arm = BEM CG arm (in), taxi = start/taxi fuel (kg).
   var AIRCRAFT = [
-    { reg: 'SEX', bem: 763.16, arm: 42.21, taxi: 3.8, type: 'c172' },
     { reg: 'TNT', bem: 760.81, arm: 40.02, taxi: 3.8, type: 'c172' },
     { reg: 'FTV', bem: 765.00, arm: 39.49, taxi: 3.8, type: 'c172' },
     { reg: 'LEO', bem: 764.00, arm: 40.18, taxi: 3.8, type: 'c172' },

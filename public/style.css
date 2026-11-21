@@ -145,3 +145,7 @@ footer { margin-top: auto; text-align: center; font-size: .75rem; color: var(--m
   .tablewrap { margin: 0; padding: 0; overflow: visible; }
 }
 @media (max-width: 480px) { .kpis dd { font-size: 1rem; } .kpis dt { font-size: .64rem; } }
+footer p + p { margin-top: 6px; }
+footer a { color: var(--muted); text-decoration: underline; text-underline-offset: 2px; display: inline-block; padding: 6px 8px; }
+footer a:hover { color: var(--brand); }
+@media print { footer { display: none; } }
