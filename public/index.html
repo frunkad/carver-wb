@@ -6,7 +6,16 @@
   <meta name="theme-color" content="#007180">
   <meta name="description" content="Carver Aviation weight & balance / trim sheet calculator">
   <title>Trimsheet · Carver Aviation W&amp;B</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✈️</text></svg>">
+  <meta name="app-version" content="f99cc61017">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+  <link rel="icon" href="icons/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Carver W&amp;B">
+  <meta name="application-name" content="Carver W&amp;B">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -78,10 +87,16 @@
 
   <footer>
     <p>For training reference only. Always verify against the aircraft POH / W&amp;B schedule.</p>
-    <p><a href="https://github.com/frunkad/carver-wb" target="_blank" rel="noopener">Source on GitHub</a></p>
+    <p><a href="https://github.com/frunkad/carver-wb" target="_blank" rel="noopener">Source on GitHub</a> <span class="ver" id="ver"></span></p>
   </footer>
+
+  <div class="toast" id="updateToast" role="status" hidden>
+    <span>Update available</span>
+    <button type="button" id="updateBtn">Reload</button>
+  </div>
 
   <script src="calc.js"></script>
   <script src="app.js"></script>
+  <script src="pwa.js"></script>
 </body>
 </html>
