@@ -33,7 +33,7 @@ ctx.__keys.forEach((k, i) => { if (!WB.find(k)) { console.log('skip (removed):',
 console.log(`${n} cases, ${fail} mismatches`);
 // Show where original limit text disagrees with correct check
 let ld = 0; ctx.__keys.forEach((k,i)=>{ if (!WB.find(k)) return; for (const [f,p,c] of cases){ const o=ctx.__run(i,f,p,c); const a=WB.find(k); const r=WB.compute(k==='tlb'?Object.assign({},a,{taxi:0}):a,f,p,c);
-  if ((o.limits.toUpperCase()==='YES') !== r.withinLimits) { ld++; if (ld<6) console.log('limit diff', k,f,p,c,'orig',o.limits,'cg',r.takeoff.cg.toFixed(2)); } }});
+  if ((o.limits.toUpperCase()==='YES') !== r.cgOk) { ld++; if (ld<6) console.log('limit diff', k,f,p,c,'orig',o.limits,'cg',r.takeoff.cg.toFixed(2)); } }});
 console.log('limit-verdict differences:', ld);
 // VT-RUM sample
 const s = WB.compute('RUM', 120, 75, 70); console.log('RUM 120L/75/70:', s.takeoff.w.toFixed(2), 'kg CG', s.takeoff.cg.toFixed(2), s.withinLimits);

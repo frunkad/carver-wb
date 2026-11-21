@@ -149,3 +149,20 @@ footer p + p { margin-top: 6px; }
 footer a { color: var(--muted); text-decoration: underline; text-underline-offset: 2px; display: inline-block; padding: 6px 8px; }
 footer a:hover { color: var(--brand); }
 @media print { footer { display: none; } }
+.status span { text-align: right; }
+.kpis div.bad { background: var(--bad-bg); }
+.kpis div.bad dd { color: var(--bad); }
+.wlimits { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; }
+.wlimits.na { grid-template-columns: 1fr; }
+.wlimits > div { border: 1.5px solid var(--line); border-radius: 10px; padding: 8px 10px; display: flex; flex-direction: column; }
+.wlimits span { font-size: .7rem; text-transform: uppercase; letter-spacing: .4px; color: var(--muted); }
+.wlimits b { font-variant-numeric: tabular-nums; }
+.wlimits em { font-style: normal; font-size: .75rem; color: var(--muted); }
+.wlimits.ok > div:first-child { border-color: #bfe8d1; }
+.wlimits.bad > div:first-child { border-color: var(--bad); background: var(--bad-bg); }
+.wlimits.bad > div:first-child em { color: var(--bad); font-weight: 600; }
+@media print { .wlimits { display: grid !important; } }
+.status b { white-space: nowrap; }
+main > *, .kpis > div, .wlimits > div, .status span { min-width: 0; }
+.kpis dd, .wlimits b, .wlimits em, .status span { overflow-wrap: anywhere; }
+.err.warn { color: #b26a00; }

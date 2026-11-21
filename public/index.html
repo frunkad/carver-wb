@@ -36,6 +36,7 @@
         <label class="field">
           <span>Co-pilot / student <small>(kg, optional)</small></span>
           <input id="co" type="number" inputmode="decimal" min="0" step="any" placeholder="0" enterkeyhint="done">
+          <em class="err warn" id="coErr"></em>
         </label>
       </div>
       <p class="hint" id="hint">Select an aircraft and enter fuel &amp; pilot weight — results update live.</p>
@@ -54,6 +55,7 @@
           <div class="glabels"><span id="gMin"></span><span id="gMax"></span></div>
         </div>
         <p class="limit" id="limitText"></p>
+        <div class="wlimits" id="weightLimits"></div>
       </div>
 
       <details class="sheet" open>

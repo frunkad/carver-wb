@@ -40,16 +40,17 @@
     }
   };
 
-  // Fleet. bem = basic empty weight (kg), arm = BEM CG arm (in), taxi = start/taxi fuel (kg).
+  // Fleet. bem = basic empty weight (kg), arm = BEM CG arm (in), taxi = start/taxi fuel (kg),
+  // mtow / mlw = max take-off / landing weight (kg); null = not known yet (no weight check).
   var AIRCRAFT = [
-    { reg: 'TNT', bem: 760.81, arm: 40.02, taxi: 3.8, type: 'c172' },
-    { reg: 'FTV', bem: 765.00, arm: 39.49, taxi: 3.8, type: 'c172' },
-    { reg: 'LEO', bem: 764.00, arm: 40.18, taxi: 3.8, type: 'c172' },
-    { reg: 'ICE', bem: 765.00, arm: 39.22, taxi: 3.0, type: 'c172' },
-    { reg: 'HOT', bem: 717.00, arm: 41.73, taxi: 3.0, type: 'c172' },
-    { reg: 'AAG', bem: 760.90, arm: 43.87, taxi: 3.8, type: 'c172' },
-    { reg: 'AAL', bem: 766.50, arm: 43.06, taxi: 3.8, type: 'c172' },
-    { reg: 'RUM', bem: 758.16, arm: 43.03, taxi: 3.8, type: 'c172' },
+    { reg: 'TNT', bem: 760.81, arm: 40.02, taxi: 3.8, mtow: 1157.70, mlw: 1157.70, type: 'c172' },
+    { reg: 'FTV', bem: 765.00, arm: 39.49, taxi: 3.8, mtow: 1157.70, mlw: 1157.70, type: 'c172' },
+    { reg: 'LEO', bem: 764.00, arm: 40.18, taxi: 3.8, mtow: 1157.70, mlw: 1157.70, type: 'c172' },
+    { reg: 'ICE', bem: 765.00, arm: 39.22, taxi: 3.0, mtow: 1112.00, mlw: 1112.00, type: 'c172' },
+    { reg: 'HOT', bem: 717.00, arm: 41.73, taxi: 3.0, mtow: 1157.70, mlw: 1157.70, type: 'c172' },
+    { reg: 'AAG', bem: 760.90, arm: 43.87, taxi: 3.8, mtow: 1157.70, mlw: 1157.70, type: 'c172' },
+    { reg: 'AAL', bem: 766.50, arm: 43.06, taxi: 3.8, mtow: 1157.70, mlw: 1157.70, type: 'c172' },
+    { reg: 'RUM', bem: 758.16, arm: 43.03, taxi: 3.8, mtow: 1111.30, mlw: 1111.30, type: 'c172' },
     { reg: 'TLB', bem: 1419.20, arm: 14.95, taxi: 5, type: 'tlb' } // taxi 5 kg per Carver (original app used 0)
   ];
 
@@ -98,7 +99,14 @@
       ramp: { w: rampW, m: rampM, cg: rampM / rampW },
       taxi: { w: ac.taxi, arm: t.fuelArm, m: taxiM },
       takeoff: { w: towW, m: towM, cg: cg, lb: towW * KG_TO_LB },
-      withinLimits: cg >= t.cgMin && cg <= t.cgMax
+      cgOk: cg >= t.cgMin && cg <= t.cgMax,
+      mtow: ac.mtow || null,
+      mlw: ac.mlw || null,
+      overMtow: ac.mtow ? towW - ac.mtow : null,   // > 0 means overweight
+      // Landing weight ≤ take-off weight; if TOW > MLW, at least this much fuel must be burnt before landing.
+      minBurnForMlw: ac.mlw ? Math.max(0, towW - ac.mlw) : null,
+      weightOk: ac.mtow ? towW <= ac.mtow : null,
+      withinLimits: (cg >= t.cgMin && cg <= t.cgMax) && (ac.mtow ? towW <= ac.mtow : true)
     };
   }
 

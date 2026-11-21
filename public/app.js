@@ -40,7 +40,9 @@
   function update() {
     var fl = num(fuel), p = num(pic), c = num(co);
     $('fuelErr').textContent = fuel.value && !fl ? 'Enter fuel in litres' : '';
-    $('picErr').textContent = pic.value && !p ? 'Enter pilot weight' : '';
+    var SEAT_SANE = 200;
+    $('picErr').textContent = pic.value && !p ? 'Enter pilot weight' : p > SEAT_SANE ? 'Check weight: over ' + SEAT_SANE + ' kg' : '';
+    $('coErr').textContent = c > SEAT_SANE ? 'Check weight: over ' + SEAT_SANE + ' kg' : '';
     var ready = selected && fl && p;
     $('hint').hidden = !!ready;
     $('result').hidden = !ready;
@@ -51,9 +53,25 @@
 
     var st = $('status');
     st.className = 'status ' + (r.withinLimits ? 'ok' : 'bad');
-    st.innerHTML = '<b>VT-' + ac.reg + '</b><span>' + (r.withinLimits ? '✓ CG within limits' : '✕ CG OUT OF LIMITS') + '</span>';
+    var msgs = [];
+    if (!r.cgOk) msgs.push('✕ CG OUT OF LIMITS');
+    if (r.weightOk === false) msgs.push('✕ OVER MTOW by ' + f2(r.overMtow) + ' kg');
+    if (!msgs.length) msgs.push(r.mtow ? '✓ CG &amp; weight OK' : '✓ CG within limits');
+    st.innerHTML = '<b>VT-' + ac.reg + '</b><span>' + msgs.join('<br>') + '</span>';
+    var wl = $('weightLimits');
+    if (r.mtow) {
+      wl.className = 'wlimits ' + (r.weightOk ? 'ok' : 'bad');
+      wl.innerHTML =
+        '<div><span>MTOW</span><b>' + f2(r.mtow) + ' kg</b><em>' + (r.weightOk ? f2(-r.overMtow) + ' kg margin' : 'over by ' + f2(r.overMtow) + ' kg') + '</em></div>' +
+        '<div><span>MLW</span><b>' + f2(r.mlw) + ' kg</b><em>' + (r.minBurnForMlw > 0 ? 'burn ≥ ' + f2(r.minBurnForMlw) + ' kg before landing' : 'TOW ≤ MLW') + '</em></div>';
+    } else {
+      wl.className = 'wlimits na';
+      wl.innerHTML = '<div><span>MTOW / MLW</span><b>not set</b><em>weight not checked for this aircraft</em></div>';
+    }
 
-    $('kTow').innerHTML = f2(r.takeoff.w) + ' kg<small>' + f2(r.takeoff.lb) + ' lb</small>';
+    $('kTow').innerHTML = f2(r.takeoff.w) + ' kg<small>' + f2(r.takeoff.lb) + ' lb' + (r.mtow ? ' · max ' + f2(r.mtow) : '') + '</small>';
+    $('kTow').parentNode.className = r.weightOk === false ? 'bad' : '';
+    $('kCg').parentNode.className = r.cgOk ? '' : 'bad';
     $('kCg').innerHTML = f2(r.takeoff.cg) + ' in<small>' + t.cgMin.toFixed(1) + '–' + t.cgMax + '</small>';
     $('kFuel').innerHTML = f2(r.fuelKg) + ' kg<small>' + r.fuelL + ' L × ' + WB.FUEL_DENSITY + '</small>';
 
@@ -62,7 +80,7 @@
     var pos = Math.max(0, Math.min(1, (r.takeoff.cg - lo) / (hi - lo)));
     var gm = $('gMark');
     gm.style.left = (pos * 100) + '%';
-    gm.className = 'gmark ' + (r.withinLimits ? 'ok' : 'bad');
+    gm.className = 'gmark ' + (r.cgOk ? 'ok' : 'bad');
     gm.setAttribute('data-v', f2(r.takeoff.cg));
     $('gMin').textContent = 'FWD ' + t.cgMin;
     $('gMax').textContent = 'AFT ' + t.cgMax;
