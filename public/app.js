@@ -56,7 +56,7 @@
     var msgs = [];
     if (!r.cgOk) msgs.push('✕ CG OUT OF LIMITS');
     if (r.weightOk === false) msgs.push('✕ OVER MTOW by ' + f2(r.overMtow) + ' kg');
-    if (!msgs.length) msgs.push(r.mtow ? '✓ CG &amp; weight OK' : '✓ CG within limits');
+    if (!msgs.length) msgs.push('✓ CG within limits');
     st.innerHTML = '<b>VT-' + ac.reg + '</b><span>' + msgs.join('<br>') + '</span>';
     var wl = $('weightLimits');
     if (r.mtow) {
