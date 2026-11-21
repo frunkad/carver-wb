@@ -7,4 +7,4 @@ Static, mobile-first weight & balance calculator. Rebuild of https://saviation.n
 - `test/compare.js` — runs the original `trimsheet.js` in a stub DOM and checks calc.js matches it: `node test/compare.js`
 - URL params: `?ac=RUM&fuel=120&pic=75&co=70`
 
-Deploy: `npx wrangler pages deploy public --project-name carver-wb`
+Deploy (Workers static assets, config in wrangler.jsonc): `set -a; . ~/.secrets/cloudflare/cloudflare.env; set +a; npx wrangler deploy`
